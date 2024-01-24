@@ -12,6 +12,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,11 +29,7 @@ class MainActivity : ComponentActivity() {
       PracticalLayoutExercisesTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-          ComposeImage(
-            title = stringResource(R.string.TitleText),
-            subTitle = stringResource(R.string.SubTitleText),
-            description = stringResource(R.string.DescriptionText)
-          )
+          ComposeArticleApp()
         }
       }
     }
@@ -40,17 +37,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ComposeImage(title: String, subTitle: String, description: String, modifier: Modifier = Modifier) {
-  Column(modifier) {
-    val image = painterResource(R.drawable.bg_compose_background)
-    Image(painter = image, contentDescription = null, contentScale = ContentScale.FillWidth)
-    ComposeText(title = title, subTitle = subTitle, description = description)
-  }
+fun ComposeArticleApp() {
+  ArticleItem(
+    title = stringResource(R.string.TitleText),
+    subTitle = stringResource(R.string.SubTitleText),
+    description = stringResource(R.string.DescriptionText),
+    imagePainter = painterResource(R.drawable.bg_compose_background)
+  )
 }
 
 @Composable
-fun ComposeText(title: String, subTitle: String, description: String, modifier: Modifier = Modifier) {
+fun ArticleItem(title: String, subTitle: String, description: String, imagePainter: Painter, modifier: Modifier = Modifier) {
   Column(modifier = modifier) {
+    Image(painter = imagePainter, contentDescription = null, contentScale = ContentScale.FillWidth)
     Text(text = title, fontSize = 24.sp, modifier = Modifier.padding(16.dp))
     Text(text = subTitle, textAlign = TextAlign.Justify, modifier = Modifier.padding(horizontal = 16.dp))
     Text(text = description, textAlign = TextAlign.Justify, modifier = Modifier.padding(16.dp))
@@ -61,10 +60,6 @@ fun ComposeText(title: String, subTitle: String, description: String, modifier: 
 @Composable
 fun DefaultPreview() {
   PracticalLayoutExercisesTheme {
-    ComposeImage(
-      title = stringResource(R.string.TitleText),
-      subTitle = stringResource(R.string.SubTitleText),
-      description = stringResource(R.string.DescriptionText)
-    )
+    ComposeArticleApp()
   }
 }
